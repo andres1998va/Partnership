@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import View
+
 # Importo Firebase Admin SDK 
 import firebase_admin
 # Hacemos uso de credenciales que nos permitirán usar Firebase Admin SDK 
@@ -10,25 +11,27 @@ from firebase_admin import db
 # Create your views here.
 
 class Estudiantes(View):
- 
+
 	# Especifico la plantilla o template que usaré 
+	
 	template_name = "index.html"
  
-	# Llamo al archivo JSON que contiene mi clave privada 
-	cred = credentials.Certificate('./partnerships-52ae1-firebase-adminsdk-bylio-0fda4b6c21.json')
- 
+	# Llamo al archivo JSON que contiene mi clave privada
+cred=credentials.Certificate('./partnerships-52ae1-firebase-adminsdk-bylio-0fda4b6c21.json')
+
 	# Iniciamos los servicios de Firebase con las credenciales y el nombre de mi proyecto en Firebase 
-	firebase_admin.initialize_app(cred, {
+firebase_admin.initialize_app(cred, {
 	    'databaseURL': 'https://partnerships-52ae1.firebaseio.com/'
 	})
  
 	# Accedo a la base de datos, específicamente a la tabla '' 
-	ref = db.reference('estudiantes') 
-	#print(ref.get())
+ref = db.reference('estudiantes') 
+print(ref.get())
  
 	# Llamo los datos que se encuentran en la tabla '' 
-	datos = ref.get()
+datos = ref.get()
  
 	# Envio los datos de la tabla '' a la vista o template 
-	def get(self, request):		
+def get(self, request):		
 		return render(request, self.template_name, { "estudiante": self.datos})
+
